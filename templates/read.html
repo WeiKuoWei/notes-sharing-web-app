@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<div class="container mt-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <form method="GET" action="{{ url_for('search_notes') }}" class="d-flex">
+                <input type="text" id="search_input" name="search_input" class="form-control me-2" placeholder="Search by full name" aria-label="Search">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {% if 'user_email' not in session %}
+                <h2 class="text-center" style="color: red;">Please login first before viewing the notes.</h2>
+                <h5 class="text-center" style="color: red;">You will be taken to the home page in 3 seconds...</h5>
+                <script>
+                    setTimeout(function () {
+                        window.location.href = "{{ url_for('home') }}";
+                    }, 3000);
+                </script>
+            {% else %}
+                <h2>All notes from {{grade}} year</h2>
+                <!-- if docs if empty -->
+                {% if docs.count() == 0 %}
+                <p><h5 style="color: red;">No note has been created by this user.</h5></p>
+                {% endif %}
+                {% for doc in docs %}
+                {% if grade == 'all' %}
+                <div>
+                    <hr class="solid">
+                    <p class="post">
+                        Posted by {{doc.name}} at {{ doc.created_at.strftime("%H:%M on %d %B %Y") }} for {{ doc.grade }} year
+                        </br>
+                        <a href="{{ url_for('edit', mongoid=doc._id)}}">Edit</a> | <a href="{{ url_for('delete', mongoid=doc._id)}}">Delete</a>
+                        </br>
+                    </p>
+                    <p>
+                        {{ doc.message }}
+                    </p>
+                </div>
+                {% else %}
+                <div>
+                    <hr class="solid">
+                    <p class="post">
+                        Posted by {{doc.name}} at {{ doc.created_at.strftime("%H:%M on %d %B %Y") }}
+                        </br>
+                        <a href="{{ url_for('edit', mongoid=doc._id)}}">Edit</a> | <a href="{{ url_for('delete', mongoid=doc._id)}}">Delete</a>
+                        </br>
+                    </p>
+                    <p>
+                        {{ doc.message }}
+                    </p>
+                </div>
+                {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

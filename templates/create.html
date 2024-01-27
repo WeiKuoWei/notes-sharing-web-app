@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block container %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {% if 'user_email' not in session %}
+                <h2 class="text-center" style="color: red;">Please login first before creating a note.</h2>
+                <h5 class="text-center" style="color: red;">You will be taken to the home page in 3 seconds...</h5>
+                <script>
+                    setTimeout(function () {
+                        window.location.href = "{{ url_for('home') }}";
+                    }, 3000);
+                </script>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            {% if 'user_email' in session %}
+                <h2>Create</h2>
+                <form method="POST" action="{{ url_for('create_post') }}" class="mt-4">
+                    <div class="mb-3">
+                        <label for="fullname" class="form-label">Your Full Name</label>
+                        <input type="text" id="fullname" name="fullname" class="form-control" value="{{ session['user_fullname'] }}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sessionGrade" class="form-label">Your Year</label>
+                        <input type="text" id="sessionGrade" name="sessionGrade" class="form-control" value="{{ session['user_grade'] }}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fmessage" class="form-label">Note</label>
+                        <textarea id="fmessage" name="fmessage" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Note</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
