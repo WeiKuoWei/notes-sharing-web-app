@@ -70,3 +70,17 @@ def registration_post():
         # After inserting into the database
         flash('Registration successful! Please log in.', 'success')  # 'success' is a category for the message
         return redirect(url_for('login'))
+    
+
+@app.errorhandler(Exception)
+def handle_error(e):
+    """
+    Output any errors - good for debugging.
+    """
+    return render_template('error.html', error=e) # render the edit template
+
+
+if __name__ == "__main__":
+    #import logging
+    #logging.basicConfig(filename='/home/ak8257/error.log',level=logging.DEBUG)
+    app.run(debug = True)
