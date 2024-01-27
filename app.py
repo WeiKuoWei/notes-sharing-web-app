@@ -137,6 +137,40 @@ def search_notes():
     return render_template('read.html', docs=docs, grade='all')  # Or pass the correct grade if needed
 
 
+
+@app.route('/create')
+def create():
+    """
+    Route for GET requests to the create page.
+    Displays a form users can fill out to create a new document.
+    """
+    return render_template('create.html') # render the create template
+
+
+@app.route('/create', methods=['POST'])
+def create_post():
+    """
+    Route for POST requests to the create page.
+    Accepts the form submission data for a new document and saves the document to the database.
+    """
+    # name = request.form['fname']
+    name = session['user_fullname']
+    # grade = request.form['fgrade']
+    grade = session['user_grade']
+    message = request.form['fmessage']
+
+
+    # create a new document with the data the user entered
+    doc = {
+        "name": name,
+        "message": message, 
+        "grade": grade,
+        "created_at": datetime.datetime.utcnow()
+    }
+    db.exampleapp.insert_one(doc) # insert a new document
+    # redirect the browser to the read page specific to the grade
+    return redirect(url_for('read', grade=grade))
+
 @app.errorhandler(Exception)
 def handle_error(e):
     """
