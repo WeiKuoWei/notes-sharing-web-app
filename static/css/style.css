@@ -1,0 +1,65 @@
+/* General Styles */
+.container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  header,
+  footer,
+  main {
+    padding: 20px;
+  }
+  
+  header,
+  main {
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 20px; /* Increased margin for better separation */
+  }
+  
+  footer {
+    margin-bottom: 0; /* Adjusted margin to reduce space */
+  }
+  
+  /* Create Form Styles */
+  .create-form {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-control {
+    width: calc(100% - 22px); /* Adjusted width to accommodate border */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .cancel-btn {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  
