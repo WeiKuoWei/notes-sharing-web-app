@@ -171,6 +171,43 @@ def create_post():
     # redirect the browser to the read page specific to the grade
     return redirect(url_for('read', grade=grade))
 
+@app.route('/edit/<mongoid>')
+def edit(mongoid):
+    """
+    Route for GET requests to the edit page.
+    Displays a form users can fill out to edit an existing record.
+    """
+    doc = db.exampleapp.find_one({"_id": ObjectId(mongoid)})
+    return render_template('edit.html', mongoid=mongoid, doc=doc) # render the edit template
+
+
+@app.route('/edit/<mongoid>', methods=['POST'])
+def edit_post(mongoid):
+    """
+    Route for POST requests to the edit page.
+    Accepts the form submission data for the specified document and updates the document in the database.
+    """
+    # name = request.form['fname']
+    name = session['user_fullname']
+    # grade = request.form['fgrade']
+    grade = session['user_grade']
+    message = request.form['fmessage']
+
+    doc = {
+        # "_id": ObjectId(mongoid), 
+        "name": name, 
+        "message": message, 
+        "grade": grade,
+        "created_at": datetime.datetime.utcnow()
+    }
+
+    db.exampleapp.update_one(
+        {"_id": ObjectId(mongoid)}, # match criteria
+        { "$set": doc }
+    )
+
+    return redirect(url_for('read', grade=grade)) # tell the browser to make a request for the /read route
+
 @app.errorhandler(Exception)
 def handle_error(e):
     """
