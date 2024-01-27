@@ -1,7 +1,5 @@
 # Flask-MongoDB Web App - Collaborative Note-Taking Platform  
 *This is a simple web-app created for practice purpose*
-## 0. App Demo:
-![Alt text](image.png)
 
 ## 1. App Description:
 Users can create, view, edit, and delete notes based on their grade level on this app. New users can register using their name, grade, email, and password. Upon registration, users can log in to create, view, edit, and delete notes. The platform supports user sessions and year-based note segregation. Users can search for notes by specifying the creator's full name. 
