@@ -114,7 +114,27 @@ def logout():
     flash('You have been logged out.', 'info')
     return redirect(url_for('home'))
 
+@app.route('/read/<grade>')
+def read(grade):
+    """
+    Route for GET requests to the read page filtered by grade.
+    Displays information for the user with links to other pages based on the chosen grade.
+    """
+    if grade == 'all':
+        docs = db.exampleapp.find().sort("created_at", -1)
+    else:
+        docs = db.exampleapp.find({"grade": grade}).sort("created_at", -1)
+    return render_template('read.html', docs=docs, grade=grade) # render the read template
 
+@app.route('/search_notes', methods=['GET'])
+def search_notes():
+    search_input = request.args.get('search_input')
+
+    # Perform a query based on the search_input
+    # Assuming 'name' is the field in your documents
+    docs = db.exampleapp.find({"name": search_input}).sort("created_at", -1)
+
+    return render_template('read.html', docs=docs, grade='all')  # Or pass the correct grade if needed
 
 
 @app.errorhandler(Exception)
