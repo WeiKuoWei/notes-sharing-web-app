@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborative Note-Taking Platform</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Custom Styles */
+        /* Override Bootstrap styles or add additional custom styles here */
+        /* ... */
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation Links -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home')}}">Collaborative Note-Taking Platform</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            All Notes
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('read', grade='all')}}">All</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('read', grade='Freshman')}}">Freshman</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('read', grade='Sophomore')}}">Sophomore</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('read', grade='Junior') }}">Junior</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('read', grade='Senior') }}">Senior</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('create')}}">Create Note</a>
+                    </li>
+                    {% if 'user_email' not in session %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login')}}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('registration')}}">Registration</a>
+                    </li>
+                    {% else %}
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout')}}">{{session['user_fullname']}} | {{session['grade']}} | Logout </a>
+                    </li> -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ session['user_fullname'] }} | {{ session['user_grade'] }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('logout')}}">Logout</a></li>
+                        </ul>
+                    </li>                    
+                    {% endif %}
+                </ul>
+            </div>            
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        {% block container %}
+            <!-- This block will contain the content from your previous base.html -->
+            <header>
+                <h1>Collaborative Note-Taking Platform</h1>
+                <!-- Your previous navigation links will go here -->
+            </header>
+            <main>
+                <!-- The content from the 'create.html' form will go here -->
+                <h2>Create</h2>
+                <p>Create a new note in the Collaborative Note-Taking Platform.</p>
+                <form method="POST" action="{{ url_for('create_post') }}" class="create-form">
+                    <!-- Your form fields will go here -->
+                </form>
+            </main>
+            <!-- Your footer content will go here -->
+        {% endblock %}
+    </div>
+
+    <!-- Copyright Section -->
+    <footer class="footer fixed-bottom" style="background-color: rgba(255, 255, 255, 0.8);">
+        <div class="container text-center">
+            <p>&copy; 2023 Wei Kuo. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
