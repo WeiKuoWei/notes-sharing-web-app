@@ -208,6 +208,16 @@ def edit_post(mongoid):
 
     return redirect(url_for('read', grade=grade)) # tell the browser to make a request for the /read route
 
+@app.route('/delete/<mongoid>')
+def delete(mongoid):
+    """
+    Route for GET requests to the delete page.
+    Deletes the specified record from the database, and then redirects the browser to the read page.
+    """
+    db.exampleapp.delete_one({"_id": ObjectId(mongoid)})
+    return redirect(url_for('read', grade='all') ) # tell the web browser to make a request for the /read route.
+
+
 @app.errorhandler(Exception)
 def handle_error(e):
     """
