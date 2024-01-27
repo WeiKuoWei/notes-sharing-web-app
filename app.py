@@ -70,7 +70,52 @@ def registration_post():
         # After inserting into the database
         flash('Registration successful! Please log in.', 'success')  # 'success' is a category for the message
         return redirect(url_for('login'))
-    
+
+
+@app.route('/login')
+def login():
+    """
+    Route for the login page
+    """
+    return render_template('login.html')
+
+# Login route
+@app.route('/login', methods=['POST'])
+def login_post():
+    # grade = request.form['fgrade']
+    email = request.form['femail']
+    password = request.form['fpassword']
+
+    # Check if the user exists in the database
+    user = db.registration.find_one({"email": email})
+
+    if user:
+        if user['password'] == password:
+            # Password matches, login successful
+            session['user_email'] = email
+            session['user_grade'] = user['grade']
+            session['user_fullname'] = user['name']
+            flash('Login successful! You can now create and read notes.', 'success')
+            return redirect(url_for('home'))
+        else:
+            # Wrong password
+            return render_template('login.html', wrong_password=True)
+    else:
+        # Email not registered
+        return render_template('login.html', email_not_registered=True)
+
+# Logout route
+@app.route('/logout')
+def logout():
+    # Clear the session variables for user logout
+    session.pop('user_email', None)
+    session.pop('user_grade', None)
+    session.pop('user_fullname', None)
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('home'))
+
+
+
 
 @app.errorhandler(Exception)
 def handle_error(e):
