@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+    }
+
+    h2 {
+        color: #007bff;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block container %}
+<div class="container">
+    <h2>Welcome to the Collaborative Note-Taking Platform!</h2>
+    <p>Whether you're here to collaborate, take notes, or manage your sessions, we've got you covered.</p>
+    <p>To get started:</p>
+    <ul>
+        <li>If you're new here, <a href="{{ url_for('registration')}}">register an account</a> to access all features.</li>
+        <li>Existing users, please <a href="{{ url_for('login')}}">login</a> to create or view your notes.</li>
+        <li>Explore the following features:</li>
+        <ul>
+            <li><a href="{{ url_for('read', grade='all')}}">View existing notes and collaborative sessions</a></li>
+            <li><a href="{{ url_for('create')}}">Create a new note-taking session</a></li>
+        </ul>
+    </ul>
+    <p>A few points you should know:</p>
+    <ul>
+        <li>Notes are grouped in different years.</li>
+        <li>Users can search notes by searching with a specific full name.</li>
+        <li>Users can only create notes for their corresponding years.</li>
+        <li>Editing notes will overwrite original note owner's name and year.</li>
+    </ul>
+</div>
+{% endblock %}
+
